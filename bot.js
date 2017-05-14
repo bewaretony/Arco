@@ -33,7 +33,7 @@ bot.on('message', message => {
   console.log('Channel ID: ' + message.channel.id)
   console.log('Channel Name: ' + message.channel.name)
 
-  if (message.channel.id == 290582899743260682 && message.author.username !== 'The_Complex') {
+  if (message.channel.id == 290582899743260682 && message.author.id !== 245387425164034049) {
     console.log('I am in a land of rioters and lies.')
     var chance = math.randomInt(10)
     console.log('Chance (1 is active): ' + chance)
@@ -65,7 +65,7 @@ bot.on('message', message => {
     message.react('🤔');
   };
 
-  if (botNameList.indexOf(message.author.username) == -1) {
+  if (botNameList.indexOf(message.author.username) == -1 && message.content.charAt(0) + message.content.charAt(1) != '~!') {
     if (message.content.charAt(0) == '#') {
       var mathe = '';
       console.log('////MATH TIME////');
@@ -105,7 +105,7 @@ bot.on('message', message => {
           message.channel.sendMessage('Error encountered: ' + mathe + ' invalid. Error: ' + error);
         };
       };
-    } else if (message.author.username == 'The_Complex' && message.content.charAt(0) == '$'){
+    } else if (message.author.id == 245387425164034049 && message.content.charAt(0) == '$'){
       var adminCommand = '';
       for (i = 1; i < message.content.length; i++) {
         adminCommand = adminCommand + message.content.charAt(i);
@@ -123,9 +123,7 @@ bot.on('message', message => {
       var lex = message.content.split(' ');
       console.log('Words: ' + lex);
       console.log('Number of words: ' + lex.length);
-
       for(i = 0; i < lex.length; i++) {
-
         if (SpellChecker.isMisspelled(lex[i])) {
           console.log('Misspelled: ' + lex[i]);
           var corrections = SpellChecker.getCorrectionsForMisspelling(lex[i]);

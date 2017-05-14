@@ -1,11 +1,17 @@
-# Arco
-A Discord.js bot capable of various specialized functions.
+# Tactic
 
-To use, create a file called secrets.json and put a valid token inside.
-Then do npm install within Arco's directory to install necessary packages, and finally nodemon to host Arco.
+Tactic is a bot which will be capable of playing several games in Discord Guild chats.
+
+## Installation
+First, execute ```npm install``` in Tactic's directory. Then, create a file called secrets.json and put a valid token inside.
 
 Your secrets.json should look like:
-
+```
 {
-"token": "YOURTOKENHERE"
+  "token": "YOURTOKENHERE"
 }
+```
+Change YOURTOKENHERE to a token from the [Discord developer site](https://discordapp.com/developers).
+
+## Execution
+To run Tactic, execute ```nodemon``` in its directory.
