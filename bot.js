@@ -116,7 +116,7 @@ bot.on('message', message => {
         console.log('Sweeping chat for messages from ' + adminCommand[1] + '…');
         message.channel.fetchMessages({limit:100}).then(messages => {
           var Victims = messages.filter(message => message.author.username === marked);
-          message.channel.bulkDelete(Victims);
+          //message.channel.bulkDelete(Victims);
         });
       };
     } else {
