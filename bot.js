@@ -21,7 +21,6 @@ bot.on("disconnect", event => {
 });
 
 bot.on('message', message => {
-  try {
     console.log('\n////NEW MESSAGE////');
     console.log('Time: ' + Date());
     console.log('From: ' + message.author.username);
@@ -139,7 +138,6 @@ bot.on('message', message => {
         console.log('Message checked.');
       };
     };
-  } catch (error) {message.reply(error)};
 });
 
 function delay(milliseconds) {
