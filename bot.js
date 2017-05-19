@@ -10,8 +10,6 @@ const token = config.token;
 const invite = 'https://discord.gg/5RXVSTn'
 const botNameList = ['Arco', 'SLAVE_1', 'Minister of Propaganda', 'Tactic']
 
-var marked
-
 bot.on('ready', () => {
   console.log('0x526561647921');
 });
@@ -115,7 +113,7 @@ bot.on('message', message => {
         if (adminCommand[0] == 'sweep') {
           console.log('Sweeping chat for messages from ' + adminCommand[1] + '…');
           message.channel.fetchMessages({limit:100}).then(messages => {
-            var Victims = messages.filter(message => message.author.username === marked);
+            var Victims = messages.filter(message => message.author.username === adminCommand[1]);
             message.channel.bulkDelete(Victims);
           });
         };
