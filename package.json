@@ -1,19 +1,23 @@
 {
   "name": "arco",
-  "version": "1.3",
+  "version": "1.5.0",
   "description": "Arco brings fear, what more could you want?",
   "main": "bot.js",
   "dependencies": {
-    "config.json": "0.0.4",
+    "config.json": "^0.0.4",
     "discord.js": "^11.0.0",
-    "erlpack": "github:hammerandchisel/erlpack#master",
-    "mathjs": "^3.10.0",
-    "mathsteps": "^0.1.5",
-    "node-opus": "^0.2.4",
-    "opusscript": "^0.0.2",
-    "spellchecker": "3.3.1",
-    "uws": "^0.13.0"
+    "mathjs": "^3.11.5",
+    "mathsteps": "^0.1.6",
+    "spellchecker": "^3.3.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/The-Complex/Arco.git"
   },
   "author": "Will: The Glorious",
-  "license": "MIT"
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/The-Complex/Arco/issues"
+  },
+  "homepage": "https://github.com/The-Complex/Arco#readme"
 }
