@@ -73,7 +73,7 @@ bot.on('message', message => {
                 message.channel.sendMessage(mathe + '=' + answer_mathstep);
               };
             });
-          }catch(error) {
+          } catch (error) {
             console.log('Error ' + error + ' encountered. Failure.');
             message.channel.sendMessage('Error encountered: ' + mathe + ' invalid. Error: ' + error);
           };
