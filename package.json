@@ -5,8 +5,8 @@
   "main": "bot.js",
   "dependencies": {
     "config.json": "^0.0.4",
-    "discord.js": "^11.0.0",
-    "mathjs": "^3.11.5",
+    "discord.js": "^11.1.0",
+    "mathjs": "^3.13.1",
     "mathsteps": "^0.1.6",
     "spellchecker": "^3.3.1"
   },
