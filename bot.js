@@ -7,7 +7,7 @@ const mathsteps = require('mathsteps');
 var config = require('config.json')('./secrets.json');
 const token = config.token;
 
-const invite = config.invite;
+
 
 bot.on('ready', () => {
   console.log('0x526561647921');
