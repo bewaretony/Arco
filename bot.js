@@ -7,8 +7,7 @@ const mathsteps = require('mathsteps');
 var config = require('config.json')('./secrets.json');
 const token = config.token;
 
-const invite = 'https://discord.gg/5RXVSTn'
-const botNameList = ['Arco', 'SLAVE_1', 'Minister of Propaganda', 'Tactic']
+const invite = config.invite;
 
 bot.on('ready', () => {
   console.log('0x526561647921');
@@ -31,39 +30,11 @@ bot.on('message', message => {
     console.log('Channel ID: ' + message.channel.id)
     console.log('Channel Name: ' + message.channel.name)
 
-    if (message.channel.id == 290582899743260682 && message.author.id !== 245387425164034049) {
-      console.log('I am in a land of rioters and lies.')
-      var chance = math.randomInt(10)
-      console.log('Chance (1 is active): ' + chance)
-      if (chance == 1) {
-        console.log('Advertisement time!');
-        console.log('Invite link: ' + invite)
-        var messageID = math.randomInt(5)
-        console.log('Message ID: ' + messageID)
-        if (messageID == 1) {
-          message.reply('FrEe StEaM m0nEy At ThIs LinK !! ClIcK HErE: ' + invite + ' !!');
-        };
-        if (messageID == 2) {
-          message.reply('Click here to recieve a free mac: ' + invite + ' !!');
-        };
-        if (messageID == 3) {
-          message.reply('Did you know: 12% of hagfish species are at risk of extinction. To learn more, visit: ' + invite + ' !!');
-        };
-        if (messageID == 4) {
-          message.reply('\nBITS 16\norg 0x7c00\n\nmov dl, 0\nmov dh, 0\nmov ch, 0\nmov cl, 0x02\nmov bx, 0x1000\nmov es, bx\nmov bx, 0\nmov ah, 0x02\nmov al, 0x01\n\nfile_read:\nint 13h\njc file_read\n\nmov ax, 0x1000\nmov ds, ax\nmov es, ax\nmov fs, ax\nmov gs, ax\nmov ss, ax\njmp 0x1000:0x0\n\ntimes 510-($-$$) db 0\ndw 0xaa55',{code: true, split: true})
-          message.reply('Click here to become a programming genius (like me!): ' + invite + ' !!');
-        };
-        if (messageID == 5) {
-          message.reply('This link (' + invite + ') will bring meaning to your life !!');
-        };
-      };
-    };
-
     if (message.author.username == 'Guzaboo') {
       message.react('🤔');
     };
 
-    if (botNameList.indexOf(message.author.username) == -1 && message.content.charAt(0) + message.content.charAt(1) != '~!') {
+    if (message.author.bot == false) {
       if (message.content.charAt(0) == '#') {
         var mathe = '';
         console.log('////MATH TIME////');
