@@ -3,8 +3,9 @@ const bot = new Discord.Client();
 const SpellChecker = require('spellchecker');
 const math = require('mathjs');
 const mathsteps = require('mathsteps');
+const config = require('config.json')('./secrets.json');
 
-var config = require('config.json')('./secrets.json');
+
 const token = config.token;
 
 
