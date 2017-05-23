@@ -35,6 +35,10 @@ bot.on('message', message => {
     };
 
     if (message.author.bot == false) {
+
+      // Start main processing
+
+      // Calculator abilities -- very messy
       if (message.content.charAt(0) == '#') {
         var mathe = '';
         console.log('////MATH TIME////');
@@ -74,6 +78,8 @@ bot.on('message', message => {
             message.channel.sendMessage('Error encountered: ' + mathe + ' invalid. Error: ' + error);
           };
         };
+
+        // Admin command handler
       } else if (message.author.id == 245387425164034049 && message.content.charAt(0) == '$'){
         var adminCommand = '';
         for (i = 1; i < message.content.length; i++) {
@@ -88,6 +94,8 @@ bot.on('message', message => {
             message.channel.bulkDelete(Victims);
           });
         };
+
+        // If nothing else, spellcheck it
       } else {
         var lex = message.content.split(' ');
         console.log('Words: ' + lex);
@@ -108,6 +116,7 @@ bot.on('message', message => {
       };
     };
 });
+
 
 function delay(milliseconds) {
   var start = new Date().getTime();
