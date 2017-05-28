@@ -9,7 +9,6 @@ const config = require('config.json')('./secrets.json');
 const token = config.token;
 
 
-
 bot.on('ready', () => {
   console.log('0x526561647921');
 });
@@ -89,10 +88,16 @@ bot.on('message', message => {
       console.log('Admin Command Issued: ' + adminCommand);
       adminCommand = adminCommand.split(' ');
       if (adminCommand[0] == 'sweep') {
-        console.log('Sweeping chat for messages from ' + adminCommand[1] + '…');
+        var broodMother = adminCommand[1]
+        for (i = 2; i < adminCommand.length; i++) {
+          broodMother = broodMother + ' ' + adminCommand[i];
+        }
+        console.log('Sweeping chat for messages from ' + broodMother + '…');
         message.channel.fetchMessages({limit:100}).then(messages => {
-          var Victims = messages.filter(message => message.author.username === adminCommand[1]);
-          message.channel.bulkDelete(Victims);
+          var Victims = messages.filter(message => message.author.username === broodMother);
+
+          // If you ain't in line, kill -9
+          message.channel.bulkDelete(Victims)
         });
       };
 
