@@ -100,7 +100,7 @@ bot.on('message', message => {
           message.channel.bulkDelete(Victims)
         });
       };
-
+      message.delete();
       // If nothing else, spellcheck it
     } else {
       var lex = message.content.split(' ');
