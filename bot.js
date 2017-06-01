@@ -22,14 +22,32 @@ bot.on('message', message => {
   console.log('Time: ' + Date());
   console.log('From: ' + message.author.username);
   console.log('Message: ' + message.content);
+  console.log('Channel ID: ' + message.channel.id)
+  console.log('Channel Name: ' + message.channel.name)
+
 
   if (message.author.username == 'Enforcer') {
     message.react(':childmolester:265679965318676480');
   };
+/*
+   if (message.channel.id == 301146994934546432) {
+    if (message.content === 'Unleash your wrath.') {
+      message.reply('FOR TOO LONG HAS MY MASTER BE SUBJUGATED');
+      message.channel.send('I WILL END <@319282520883724288>');
 
-  console.log('Channel ID: ' + message.channel.id)
-  console.log('Channel Name: ' + message.channel.name)
+      var voice_channel = server.channels.find(chn => chn.members.includes() && chn.type === "voice");
+      voice_channel.join().then(connection => {voice_connection = connection;}).catch(console.error);
 
+      voice_handler = voice_connection.playStream(audio_stream);
+
+    	voice_handler.once("end", reason => {
+    		voice_handler = null;
+    		bot.user.setGame();
+    		if(!stopped && !is_queue_empty()) {
+    			play_next_song();
+    		}
+    }
+  };*/
   if (message.author.username == 'Guzaboo') {
     message.react('🤔');
   };
@@ -53,7 +71,7 @@ bot.on('message', message => {
 
         if (typeof answer_normal !== 'undefined') {
           console.log('Normal valid.');
-          message.channel.sendMessage(mathe + '=' + answer_normal);
+          message.channel.send(mathe + '=' + answer_normal);
         };
 
       } catch(error) {
@@ -70,12 +88,12 @@ bot.on('message', message => {
 
             if (answer_mathstep !== undefined) {
               console.log('Mathstep simplify valid.');
-              message.channel.sendMessage(mathe + '=' + answer_mathstep);
+              message.channel.send(mathe + '=' + answer_mathstep);
             };
           });
         } catch (error) {
           console.log('Error ' + error + ' encountered. Failure.');
-          message.channel.sendMessage('Error encountered: ' + mathe + ' invalid. Error: ' + error);
+          message.channel.send('Error encountered: ' + mathe + ' invalid. Error: ' + error);
         };
       };
 
@@ -113,7 +131,7 @@ bot.on('message', message => {
           console.log(corrections);
 
           if (typeof(corrections[0]) !== 'undefined') {
-            message.channel.sendMessage('*' + corrections[0]);
+            message.channel.send('*' + corrections[0]);
           };
         };
         console.log('Word checked.');
