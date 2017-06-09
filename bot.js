@@ -1,6 +1,5 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
-const SpellChecker = require('spellchecker');
 const math = require('mathjs');
 const mathsteps = require('mathsteps');
 const config = require('config.json')('./secrets.json');
@@ -119,25 +118,7 @@ bot.on('message', message => {
         });
       };
       message.delete();
-      // If nothing else, spellcheck it
-    } else {
-      var lex = message.content.split(' ');
-      console.log('Words: ' + lex);
-      console.log('Number of words: ' + lex.length);
-      for(i = 0; i < lex.length; i++) {
-        if (SpellChecker.isMisspelled(lex[i])) {
-          console.log('Misspelled: ' + lex[i]);
-          var corrections = SpellChecker.getCorrectionsForMisspelling(lex[i]);
-          console.log(corrections);
-
-          if (typeof(corrections[0]) !== 'undefined') {
-            message.channel.send('*' + corrections[0]);
-          };
-        };
-        console.log('Word checked.');
-      };
-      console.log('Message checked.');
-    };
+    }
   };
 });
 
