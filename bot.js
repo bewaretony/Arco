@@ -28,25 +28,7 @@ bot.on('message', message => {
   if (message.author.username == 'Enforcer') {
     message.react(':childmolester:265679965318676480');
   };
-  /*
-  if (message.channel.id == 301146994934546432) {
-  if (message.content === 'Unleash your wrath.') {
-  message.reply('FOR TOO LONG HAS MY MASTER BE SUBJUGATED');
-  message.channel.send('I WILL END <@319282520883724288>');
-
-  var voice_channel = server.channels.find(chn => chn.members.includes() && chn.type === "voice");
-  voice_channel.join().then(connection => {voice_connection = connection;}).catch(console.error);
-
-  voice_handler = voice_connection.playStream(audio_stream);
-
-  voice_handler.once("end", reason => {
-  voice_handler = null;
-  bot.user.setGame();
-  if(!stopped && !is_queue_empty()) {
-  play_next_song();
-}
-}
-};*/
+  
 if (message.author.username == 'Guzaboo') {
   message.react('🤔');
 };
