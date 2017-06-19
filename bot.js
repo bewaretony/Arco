@@ -107,7 +107,7 @@ if (message.author.bot == false) {
     if (adminCommand[0] == 'sweep') {
       var broodMother = adminCommand[1]
       switch (broodMother) {
-        case 'message': var deathMother = adminCommand[2];
+        case 'content': var deathMother = adminCommand[2];
         for (i = 3; i < adminCommand.length; i++) {deathMother = deathMother + ' ' + adminCommand[i]};
         console.log('Sweeping chat for messages matching ' + deathMother + '…');
         message.channel.fetchMessages({limit:100}).then(messages => {
