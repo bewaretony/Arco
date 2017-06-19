@@ -106,29 +106,30 @@ if (message.author.bot == false) {
     adminCommand = adminCommand.split(' ');
     if (adminCommand[0] == 'sweep') {
       var broodMother = adminCommand[1]
-      if (broodMother == 'message') {
-        var deathMother = adminCommand[2]
-        for (i = 2; i < adminCommand.length; i++) {
-          deathMother = deathMother + ' ' + adminCommand[i];
-        };
+      switch (broodMother) {
+        case 'message': var deathMother = adminCommand[2];
+        for (i = 3; i < adminCommand.length; i++) {deathMother = deathMother + ' ' + adminCommand[i]};
         console.log('Sweeping chat for messages matching ' + deathMother + '…');
         message.channel.fetchMessages({limit:100}).then(messages => {
           var Victims = messages.filter(message => message.content == deathMother);
-        } else {
-          for (i = 2; i < adminCommand.length; i++) {
-            broodMother = broodMother + ' ' + adminCommand[i];
-          };
-          console.log('Sweeping chat for messages from ' + broodMother + '…');
-          message.channel.fetchMessages({limit:100}).then(messages => {
-            var Victims = messages.filter(message => message.author.username === broodMother);
-          });
-        }
-        // If you ain't in line, kill -9
-        message.channel.bulkDelete(Victims)
+
+          // If you ain't in line, kill -9
+          message.channel.bulkDelete(Victims);
+        });
+        break;
+        default: for (i = 2; i < adminCommand.length; i++) {broodMother = broodMother + ' ' + adminCommand[i]};
+        console.log('Sweeping chat for messages from ' + broodMother + '…');
+        message.channel.fetchMessages({limit:100}).then(messages => {
+          var Victims = messages.filter(message => message.author.username == broodMother);
+
+          // If you ain't in line, kill -9
+          message.channel.bulkDelete(Victims);
+        });
       };
-      message.delete();
-    }
+    };
+    message.delete();
   };
+};
 });
 
 
