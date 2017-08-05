@@ -4,6 +4,7 @@
   "description": "Arco brings fear, what more could you want?",
   "main": "bot.js",
   "dependencies": {
+    "bad-language-filter": "^1.0.2",
     "config.json": "^0.0.4",
     "discord.js": "^11.1.0",
     "mathjs": "^3.13.1",
