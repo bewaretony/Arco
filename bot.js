@@ -106,8 +106,7 @@ bot.on('message', message => {
           break;
 
           case 'author':
-          var sweepTargetUser = adminCommand.splice(1).join(' ');
-          for (i = 1; i < adminCommand.length; i++) {var sweepTargetUser = sweepTargetUser + ' ' + adminCommand[i]};
+          var sweepTargetUser = adminCommand.splice(2).join(' ');
           console.log('Sweeping chat for messages from ' + sweepTargetUser + '...');
           message.channel.fetchMessages({limit:100}).then(messages => {
             let Victims = messages.filter(message => message.author.username == sweepTargetUser);
