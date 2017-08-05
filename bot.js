@@ -87,45 +87,33 @@ bot.on('message', message => {
           case 'content':
           var sweepTargetContent = adminCommand.splice(2).join(' ');
           console.log('Sweeping chat for messages matching ' + sweepTargetContent + '...');
-          message.channel.fetchMessages({limit:100}).then(messages => {
-            let Victims = messages.filter(message => message.content == sweepTargetContent);
 
-            // If you ain't in line, kill -9
-            message.channel.bulkDelete(Victims);
-          });
+          message.channel.fetchMessages({limit:100}).then(messages => {var Victims = messages.filter(message => message.content == sweepTargetContent)});
           break;
 
           case 'charAt':
           console.log('Sweeping chat for messages with a \'' + adminCommand[3] + '\' character in the ' + adminCommand[2] + 'position...')
-          message.channel.fetchMessages({limit:100}).then(messages => {
-            let Victims = messages.filter(message => message.content.charAt(adminCommand[2]) == adminCommand[3]);
 
-            // If you ain't in line, kill -9
-            message.channel.bulkDelete(Victims);
-          });
+          message.channel.fetchMessages({limit:100}).then(messages => {var Victims = messages.filter(message => message.content.charAt(adminCommand[2]) == adminCommand[3])});
           break;
-
+          
           case 'author':
           var sweepTargetUser = adminCommand.splice(2).join(' ');
           console.log('Sweeping chat for messages from ' + sweepTargetUser + '...');
-          message.channel.fetchMessages({limit:100}).then(messages => {
-            let Victims = messages.filter(message => message.author.username == sweepTargetUser);
 
-            // If you ain't in line, kill -9
-            message.channel.bulkDelete(Victims);
-          });
+          message.channel.fetchMessages({limit:100}).then(messages => {var Victims = messages.filter(message => message.author.username == sweepTargetUser)});
           break;
 
           default:
           console.log('Sweeping chat for ' + adminCommand[1] + ' messages...');
-          message.channel.fetchMessages({limit:adminCommand[1]}).then(messages => {
-            let Victims = messages;
 
-            // If you ain't in line, kill -9
-            message.channel.bulkDelete(Victims);
-          });
+          message.channel.fetchMessages({limit:adminCommand[1]}).then(messages => {var Victims = messages});
           break;
         };
+
+        // If you ain't in line, kill -9
+        message.channel.bulkDelete(Victims);
+
       };
       message.delete();
     };
