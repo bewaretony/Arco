@@ -3,8 +3,8 @@ const bot = new Discord.Client();
 const math = require('mathjs');
 const mathsteps = require('mathsteps');
 const config = require('config.json')('./secrets.json');
-const BLF = require('bad-language-filter');
-const filter = new BLF();
+const BadLanguageFilter = require('bad-language-filter');
+const filter = new BadLanguageFilter();
 
 
 const token = config.token;
@@ -27,11 +27,9 @@ bot.on('message', message => {
   console.log('Channel Name: ' + message.channel.name)
   const messageSplit = message.content.split(' ');
 
-  for (i = 1; i < message.content.length; i++) {
-    if (filter.contains(messageSplit[i])) {
-      console.log('Profanity "' + messageSplit[i] + '" present in message from: ' + message.author.username);
-      message.reply('¡LANGUAGE CENSORSHIP!');
-    };
+  if (filter.contains(message.content)) {
+    //console.log('Profanity "' + filter.match(message.content) + '" present in message from: ' + message.author.username);
+    message.reply('¡LANGUAGE CENSORSHIP!');
   };
 
   if (message.author.username == 'Guzaboo') {
@@ -107,18 +105,28 @@ bot.on('message', message => {
           });
           break;
 
-          default:
+          case 'author':
           var sweepTargetUser = adminCommand.splice(1).join(' ');
           for (i = 1; i < adminCommand.length; i++) {var sweepTargetUser = sweepTargetUser + ' ' + adminCommand[i]};
-          console.log('Sweeping chat for messages from ' + sweepTargetUser + '…');
+          console.log('Sweeping chat for messages from ' + sweepTargetUser + '...');
           message.channel.fetchMessages({limit:100}).then(messages => {
             let Victims = messages.filter(message => message.author.username == sweepTargetUser);
 
             // If you ain't in line, kill -9
             message.channel.bulkDelete(Victims);
           });
+          break;
+
+          default:
+          console.log('Sweeping chat for ' + adminCommand[1] + ' messages...');
+          message.channel.fetchMessages({limit:adminCommand[1]}).then(messages => {
+            let Victims = messages;
+
+            // If you ain't in line, kill -9
+            message.channel.bulkDelete(Victims);
+          });
+          break;
         };
-        break;
       };
       message.delete();
     };
