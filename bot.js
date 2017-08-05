@@ -14,8 +14,8 @@ bot.on('ready', () => {
   console.log('0x526561647921');
 });
 
-bot.on("disconnect", event => {
-  console.log("!Disconnected: " + event.reason + " (" + event.code + ")!");
+bot.on('disconnect', event => {
+  console.log('!Disconnected: ' + event.reason + ' (' + event.code + ')!');
 });
 
 bot.on('message', message => {
