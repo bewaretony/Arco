@@ -28,7 +28,7 @@ bot.on('message', message => {
   const messageSplit = message.content.split(' ');
 
   if (filter.contains(message.content)) {
-    //console.log('Profanity "' + filter.match(message.content) + '" present in message from: ' + message.author.username);
+    console.log('Profanity present in message from: ' + message.author.username);
     message.reply('¡LANGUAGE CENSORSHIP!');
   };
 
