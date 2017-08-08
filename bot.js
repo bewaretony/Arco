@@ -143,7 +143,7 @@ bot.on('message', message => {
 
 function delay(milliseconds) {
   var start = new Date().getTime();
-  for (var i = 0; i < 1e7; i++) {
+  for (i = 0; i < 1e7; i++) {
     if ((new Date().getTime() - start) > milliseconds) {
       break;
     };
