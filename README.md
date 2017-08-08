@@ -1,8 +1,19 @@
 # Arco
 
-Arco is general-purpose bot I use to personally moderate my servers. It currently can handle a variety of mathematical inputs using [mathjs](http://mathjs.org/), as well as responding to the ```$sweep``` command to bulk-delete messages from a specific user.
+Arco is a specialized bot that can perform the following:
 
-To input a mathematical prompt, simply prefix your prompt with an octothorpe (#). See the [mathjs documentation](http://mathjs.org/docs/index.html) for more info.
+1. ### Mathematical Inputs
+
+Messages with a '#' prefix are handled as mathematical inputs by [mathjs](http://mathjs.org/docs/index.html).
+
+2. ### Bulk message deletion
+
+Messages with a '$' prefix are treated as special commands. Currently, the only '$' command is 'sweep'.
+
+3. ### Censorship
+
+Arco responds to messages containing a word in the ./node_modules/profane/lib/badwords.json file (present after installation) with "🚫 ¡LANGUAGE CENSORSHIP! 🚫", which is deleted after 2 seconds to prevent spam.
+
 
 ## Installation
 First, execute ```npm install``` in Arco's directory. Then, create a file called secrets.json and put a valid token inside.
@@ -10,10 +21,14 @@ First, execute ```npm install``` in Arco's directory. Then, create a file called
 Your secrets.json should look like:
 ```
 {
-  "token": "YOURTOKENHERE"
+  "token": "YOURTOKENHERE",
+  "admin": YOURIDHERE
 }
 ```
 Change YOURTOKENHERE to a token from the [Discord developer site](https://discordapp.com/developers).
+
+Change YOURIDHERE to your user ID (or the user ID of your bot admin). Arco will only respond to '$' commands issued by a user with a matching ID.
+
 
 ## Execution
 To run Arco, execute ```nodemon``` in its directory.

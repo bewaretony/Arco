@@ -88,7 +88,7 @@ bot.on('message', message => {
       };
 
       // Admin command handler
-    } else if (message.author.id == 245387425164034049 && message.content.charAt(0) == '$') {
+    } else if (message.author.id == config.admin && message.content.charAt(0) == '$') {
       let adminCommand = message.content.slice(1).split(' ');
       console.log('Admin Command Issued: ' + adminCommand);
 
@@ -110,7 +110,7 @@ bot.on('message', message => {
           console.log('Sweeping chat for messages with a \'' + adminCommand[3] + '\' character in the ' + adminCommand[2] + 'position...')
           message.channel.fetchMessages({limit:100}).then(messages => {
             let Victims = messages.filter(message => message.content.charAt(adminCommand[2]) == adminCommand[3]);
-            
+
             message.channel.bulkDelete(Victims);
           });
           break;
