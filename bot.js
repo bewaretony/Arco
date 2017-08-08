@@ -3,7 +3,8 @@ const bot = new Discord.Client();
 const math = require('mathjs');
 const mathsteps = require('mathsteps');
 const config = require('config.json')('./secrets.json');
-
+const Profane = require('profane');
+const censor = new Profane();
 
 const token = config.token;
 
@@ -25,10 +26,23 @@ bot.on('message', message => {
   console.log('Channel Name: ' + message.channel.name)
   const messageSplit = message.content.split(' ');
 
-  /*if (PROFANE) {
-    console.log('Profanity present in message from: ' + message.author.username);
-    message.reply('¡LANGUAGE CENSORSHIP!');
-  };*/
+  console.log('Output of censor: ' + JSON.stringify(censor.getCategoryCounts(message.content)));
+  censorLoop:
+  for (i = 0; i < messageSplit.length; i++) {
+    console.log('Checking: '+ messageSplit[i]);
+    console.log(censor.hasWord(messageSplit[i]));
+    
+    if (censor.hasWord(messageSplit[i])) {
+      console.log('Profanity present in message from: ' + message.author.username);
+      message.reply('🚫 ¡LANGUAGE CENSORSHIP! 🚫');
+      break censorLoop;
+    };
+  };
+
+  if (message.content == '🚫 ¡LANGUAGE CENSORSHIP! 🚫' && message.author.username == 'Arco') {
+    delay(2000);
+    message.delete();
+  };
 
   if (message.author.username == 'Guzaboo') {
     message.react('🤔');
