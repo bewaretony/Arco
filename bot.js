@@ -32,7 +32,7 @@ bot.on('message', message => {
     console.log('Checking: '+ messageSplit[i]);
     console.log(censor.hasWord(messageSplit[i]));
 
-    if (censor.hasWord(messageSplit[i])) {
+    if (censor.hasWord(messageSplit[i].replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s{2,}/g," ").toLowerCase())) {
       console.log('Profanity present in message from: ' + message.author.username);
       message.reply('🚫 ¡LANGUAGE CENSORSHIP! 🚫');
       break censorLoop;
@@ -40,7 +40,7 @@ bot.on('message', message => {
   };
 
   if (message.content.includes('🚫 ¡LANGUAGE CENSORSHIP! 🚫') && message.author.username == 'Arco') {
-    delay(2000);
+    delay(5000);
     message.delete();
   };
 
