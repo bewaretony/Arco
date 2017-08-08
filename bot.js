@@ -3,8 +3,6 @@ const bot = new Discord.Client();
 const math = require('mathjs');
 const mathsteps = require('mathsteps');
 const config = require('config.json')('./secrets.json');
-const BadLanguageFilter = require('bad-language-filter');
-const filter = new BadLanguageFilter();
 
 
 const token = config.token;
@@ -27,10 +25,10 @@ bot.on('message', message => {
   console.log('Channel Name: ' + message.channel.name)
   const messageSplit = message.content.split(' ');
 
-  if (filter.contains(message.content)) {
+  /*if (PROFANE) {
     console.log('Profanity present in message from: ' + message.author.username);
     message.reply('¡LANGUAGE CENSORSHIP!');
-  };
+  };*/
 
   if (message.author.username == 'Guzaboo') {
     message.react('🤔');
