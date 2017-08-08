@@ -100,7 +100,7 @@ bot.on('message', message => {
           var sweepTargetContent = adminCommand.splice(2).join(' ');
           console.log('Sweeping chat for messages matching ' + sweepTargetContent + '...');
           message.channel.fetchMessages({limit:100}).then(messages => {
-            let Victims = messages.filter(message => message.content == sweepTargetContent);
+            let Victims = messages.filter(message => message.content.includes(sweepTargetContent));
 
             message.channel.bulkDelete(Victims);
           });
