@@ -25,7 +25,7 @@ bot.on('message', message => {
   console.log('Channel ID: ' + message.channel.id)
   console.log('Channel Name: ' + message.channel.name)
   const messageSplit = message.content.split(' ');
-
+  if (message.content.toLowerCase().includes('phil')) message.delete();
   console.log('Output of censor: ' + JSON.stringify(censor.getCategoryCounts(message.content)));
   censorLoop:
   for (i = 0; i < messageSplit.length; i++) {
@@ -34,7 +34,18 @@ bot.on('message', message => {
 
     if (censor.hasWord(messageSplit[i].replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s{2,}/g," ").toLowerCase())) {
       console.log('Profanity present in message from: ' + message.author.username);
-      message.reply('🚫 ¡LANGUAGE CENSORSHIP! 🚫');
+      message.reply({'content': '🚫 ¡LANGUAGE CENSORSHIP! 🚫', "embed": {
+          "title": "¡LANGUAGE CENSORSHIP!",
+          "description": '"' + messageSplit[i].replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s{2,}/g," ") + '" is a bad word. Don\'t use it. >:(',
+          "color": 0xff0000,
+          "footer": {
+            "text": "Glory to LEARAX57H"
+          },
+          "image": {
+            "url": "https://getadblock.com/images/adblock_logo_stripe_test.png"
+          }
+        }
+      });
       break censorLoop;
     };
   };
