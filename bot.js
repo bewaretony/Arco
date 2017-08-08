@@ -100,7 +100,7 @@ bot.on('message', message => {
           var sweepTargetContent = adminCommand.splice(2).join(' ');
           console.log('Sweeping chat for messages matching ' + sweepTargetContent + '...');
           message.channel.fetchMessages({limit:100}).then(messages => {
-            let Victims = messages.filter(message => message.content == sweepTargetContent);
+            let Victims = messages.filter(message => message.content.includes(sweepTargetContent));
 
             message.channel.bulkDelete(Victims);
           });
@@ -110,7 +110,7 @@ bot.on('message', message => {
           console.log('Sweeping chat for messages with a \'' + adminCommand[3] + '\' character in the ' + adminCommand[2] + 'position...')
           message.channel.fetchMessages({limit:100}).then(messages => {
             let Victims = messages.filter(message => message.content.charAt(adminCommand[2]) == adminCommand[3]);
-
+            
             message.channel.bulkDelete(Victims);
           });
           break;
