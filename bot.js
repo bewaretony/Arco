@@ -29,10 +29,11 @@ bot.on('message', message => {
   console.log('Output of censor: ' + JSON.stringify(censor.getCategoryCounts(message.content)));
   censorLoop:
   for (i = 0; i < messageSplit.length; i++) {
+    let simpleWord = messageSplit[i].replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s{2,}/g," ").toLowerCase().replace(/[^\w\s]|(.)(?=\1)/gi, "");
     console.log('Checking: '+ messageSplit[i]);
-    console.log(censor.hasWord(messageSplit[i]));
+    console.log(censor.hasWord(simpleWord));
 
-    if (censor.hasWord(messageSplit[i].replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s{2,}/g," ").toLowerCase())) {
+    if (censor.hasWord(simpleWord)) {
       console.log('Profanity present in message from: ' + message.author.username);
       message.reply({'content': '🚫 ¡LANGUAGE CENSORSHIP! 🚫', "embed": {
           "title": "¡LANGUAGE CENSORSHIP!",
