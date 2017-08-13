@@ -103,7 +103,12 @@ bot.on('message', message => {
           break;
 
           default:
-          console.log('Sweeping chat for ' + adminCommand[1] + ' messages...');
+          if (!(adminCommand[1] == undefined)) {
+            console.log('Sweeping chat for ' + adminCommand[1] + ' messages...')
+          } else {
+            console.log('Removing past 100 messages...');
+          };
+
           message.channel.fetchMessages({limit:adminCommand[1]}).then(messages => {
             let Victims = messages;
 
