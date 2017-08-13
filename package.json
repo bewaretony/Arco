@@ -2,7 +2,7 @@
   "name": "incognita",
   "version": "1.0.0",
   "description": "This host is... acceptable.",
-  "main": "bot.js",
+  "main": "incognita.js",
   "dependencies": {
     "config.json": "^0.0.4",
     "discord.js": "^11.1.0",
@@ -11,12 +11,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/The-Complex/Arco.git"
+    "url": "https://github.com/The-Complex/Arco/tree/incognita"
   },
-  "author": "LEARAX57H, not 'Lexarax57h' or whatever",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/The-Complex/Arco/issues"
-  },
-  "homepage": "https://github.com/The-Complex/Arco#readme"
+  "author": "LEARAX57H",
+  "license": "MIT"
 }
