@@ -10,10 +10,6 @@ Messages with a '#' prefix are handled as mathematical inputs by [mathjs](http:/
 
 Messages with a '$' prefix are treated as special commands. Currently, the only '$' command is 'sweep'.
 
-3. ### Censorship
-
-Incognita responds to messages containing a word in the ./node_modules/profane/lib/badwords.json file (present after installation) with "🚫 ¡LANGUAGE CENSORSHIP! 🚫", which is deleted after 2 seconds to prevent spam.
-
 
 ## Installation
 First, execute ```npm install``` in Incognita's directory. Then, create a file called secrets.json and put a valid token inside.
