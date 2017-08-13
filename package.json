@@ -1,7 +1,7 @@
 {
-  "name": "arco",
-  "version": "2.2.0",
-  "description": "Arco brings fear, what more could you want?",
+  "name": "incognita",
+  "version": "1.0.0",
+  "description": "This host is... acceptable.",
   "main": "bot.js",
   "dependencies": {
     "config.json": "^0.0.4",
@@ -14,7 +14,7 @@
     "type": "git",
     "url": "git+https://github.com/The-Complex/Arco.git"
   },
-  "author": "Will: The Glorious",
+  "author": "LEARAX57H, not 'Lexarax57h' or whatever",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/The-Complex/Arco/issues"

@@ -10,7 +10,7 @@ const token = config.token;
 
 
 bot.on('ready', () => {
-  console.log('0x526561647921');
+  console.log('Receiving priority 1 transmission...');
 });
 
 bot.on('disconnect', event => {

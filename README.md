@@ -1,6 +1,6 @@
-# Arco
+# Incognita
 
-Arco is a specialized bot that can perform the following:
+Incognita is a modified form of Arco for the Invisible, Inc. Discord server. It is capable of:
 
 1. ### Mathematical Inputs
 
@@ -12,11 +12,11 @@ Messages with a '$' prefix are treated as special commands. Currently, the only 
 
 3. ### Censorship
 
-Arco responds to messages containing a word in the ./node_modules/profane/lib/badwords.json file (present after installation) with "🚫 ¡LANGUAGE CENSORSHIP! 🚫", which is deleted after 2 seconds to prevent spam.
+Incognita responds to messages containing a word in the ./node_modules/profane/lib/badwords.json file (present after installation) with "🚫 ¡LANGUAGE CENSORSHIP! 🚫", which is deleted after 2 seconds to prevent spam.
 
 
 ## Installation
-First, execute ```npm install``` in Arco's directory. Then, create a file called secrets.json and put a valid token inside.
+First, execute ```npm install``` in Incognita's directory. Then, create a file called secrets.json and put a valid token inside.
 
 Your secrets.json should look like:
 ```
@@ -27,8 +27,8 @@ Your secrets.json should look like:
 ```
 Change YOURTOKENHERE to a token from the [Discord developer site](https://discordapp.com/developers).
 
-Change YOURIDHERE to your user ID (or the user ID of your bot admin). Arco will only respond to '$' commands issued by a user with a matching ID.
+Change YOURIDHERE to your user ID (or the user ID of your bot admin). Incognita will only respond to '$' commands issued by a user with a matching ID.
 
 
 ## Execution
-To run Arco, execute ```nodemon``` in its directory.
+To run Incognita, execute ```nodemon``` in its directory.
