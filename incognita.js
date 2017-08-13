@@ -3,8 +3,6 @@ const bot = new Discord.Client();
 const math = require('mathjs');
 const mathsteps = require('mathsteps');
 const config = require('config.json')('./secrets.json');
-const Profane = require('profane');
-const censor = new Profane();
 
 const token = config.token;
 
@@ -25,36 +23,6 @@ bot.on('message', message => {
   console.log('Channel ID: ' + message.channel.id)
   console.log('Channel Name: ' + message.channel.name)
   const messageSplit = message.content.split(' ');
-  if (message.content.toLowerCase().includes('phil')) message.delete();
-  console.log('Output of censor: ' + JSON.stringify(censor.getCategoryCounts(message.content)));
-  censorLoop:
-  for (i = 0; i < messageSplit.length; i++) {
-    let simpleWord = messageSplit[i].replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s{2,}/g," ").toLowerCase().replace(/[^\w\s]|(.)(?=\1)/gi, "");
-    console.log('Checking: '+ messageSplit[i]);
-    console.log(censor.hasWord(simpleWord));
-
-    if (censor.hasWord(simpleWord)) {
-      console.log('Profanity present in message from: ' + message.author.username);
-      message.reply({'content': '🚫 ¡LANGUAGE CENSORSHIP! 🚫', "embed": {
-          "title": "¡LANGUAGE CENSORSHIP!",
-          "description": '"' + messageSplit[i].replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s{2,}/g," ") + '" is a bad word. Don\'t use it. >:(',
-          "color": 0xff0000,
-          "footer": {
-            "text": "Glory to LEARAX57H"
-          },
-          "image": {
-            "url": "https://getadblock.com/images/adblock_logo_stripe_test.png"
-          }
-        }
-      });
-      break censorLoop;
-    };
-  };
-
-  if (message.content.includes('🚫 ¡LANGUAGE CENSORSHIP! 🚫') && message.author.username == 'Arco') {
-    delay(5000);
-    message.delete();
-  };
 
   if (message.author.username == 'Guzaboo') {
     message.react('🤔');
