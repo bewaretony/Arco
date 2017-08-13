@@ -24,9 +24,6 @@ bot.on('message', message => {
   console.log('Channel Name: ' + message.channel.name)
   const messageSplit = message.content.split(' ');
 
-  if (message.author.username == 'Guzaboo') {
-    message.react('🤔');
-  };
 
   if (!message.author.bot) {
 
