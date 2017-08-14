@@ -29,7 +29,7 @@ bot.on('message', message => {
 	console.log('Output of censor: ' + JSON.stringify(censor.getCategoryCounts(message.content)));
 	censorLoop:
 	for (i = 0; i < messageSplit.length; i++) {
-		let simpleWord = removeDiacritics(messageSplit[i].replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s{2,}/g," ").toLowerCase().replace(/[^\w\s]|(.)(?=\1)/gi, "").replace(/0|&#1086;/gi,"o").replace(/1/gi,"i"));
+		let simpleWord = removeDiacritics(messageSplit[i].replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s{2,}/g," ").toLowerCase().replace(/[^\w\s]|(.)(?=\1)/gi, "").replace(/0|&#1086;/gi,'o').replace(/1/gi,'i'));
 
 		console.log('Checking: '+ messageSplit[i]);
 		console.log(censor.hasWord(simpleWord));
