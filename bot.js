@@ -36,6 +36,7 @@ bot.on('message', message => {
 
 		if (censor.hasWord(simpleWord)) {
 			console.log('Profanity present in message from: ' + message.author.username);
+			message.react('🛑');
 			message.reply({'content': '🚫 ¡LANGUAGE CENSORSHIP! 🚫', "embed": {
 				"title": "¡LANGUAGE CENSORSHIP!",
 				"description": '"' + messageSplit[i].replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s{2,}/g," ") + '" is a bad word. Don\'t use it. >:(',
