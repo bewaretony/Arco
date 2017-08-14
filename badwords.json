@@ -387,7 +387,6 @@
     "whoreface": ["insult"],
     "doofus": ["insult", "informal"],
     "butt": ["sexual"],
-    "bro": ["informal"],
     "wanker": ["insult"],
     "pingis": ["sexual"],
     "balls": ["sexual"],
@@ -398,7 +397,5 @@
     "dank": ["informal"],
     "marijuana": ["informal"],
     "noice": ["informal"],
-    "turd": ["insult"],
-    "fuuck": ["sexual"],
-    "fuuuck": ["sexual"]
+    "turd": ["insult"]
 }
