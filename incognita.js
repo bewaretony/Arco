@@ -9,9 +9,9 @@ const token = config.token;
 
 bot.on('ready', () => {
 	console.log('Receiving priority 1 transmission...');
-	const invisibleServer = bot.guilds.get('293459358547705856');
+	const invisibleServer = bot.guilds.get(config.invisibleServerID);
 	if (typeof invisibleServer != undefined) console.log('Located guild: ' + invisibleServer.name);
-	const logChannel = invisibleServer.channels.get('347133295752118272');
+	const logChannel = invisibleServer.channels.get(config.logChannelID);
 	if (typeof logChannel != undefined) console.log('Located log channel: ' + logChannel.name);
 	logChannel.send('SUCCESS');
 });

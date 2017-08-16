@@ -18,13 +18,18 @@ Your secrets.json should look like:
 ```
 {
   "token": "YOURTOKENHERE",
-  "admin": YOURIDHERE
+  "admin": YOURIDHERE,
+  "invisibleServerID": "YOURGUILDIDHERE",
+  "logChannelID": "YOURLOGCHANNELIDHERE"
 }
 ```
-Change YOURTOKENHERE to a token from the [Discord developer site](https://discordapp.com/developers).
+YOURTOKENHERE: A token from the [Discord developer site](https://discordapp.com/developers).
 
-Change YOURIDHERE to your user ID (or the user ID of your bot admin). Incognita will only respond to '$' commands issued by a user with a matching ID.
+YOURIDHERE: Your user ID (or the user ID of your bot admin). Incognita will only respond to '$' commands issued by a user with a matching ID.
 
+YOURGUILDHERE: The ID of the guild you want Incognita to operate in.
+
+YOURLOGCHANNELIDHERE: The ID of a text channel to be used by Incognita for logging. Must be within the guild matching YOURGUILDHERE
 
 ## Execution
 To run Incognita, execute ```nodemon``` in its directory.
