@@ -16,10 +16,9 @@ bot.on('ready', () => {
 	logChannel.send({embed: {
 		color: 0x08c507,
 		author: {
-			name: bot.user.username,
-			icon_url: 'http://thejacksonvillebookstore.com/images/blank.png'
+			name: bot.user.username
 		},
-		title: "Success",
+		title: "System Initialized...",
 		description: "Startup & connection to log channel successful!",
 		"thumbnail": {
 			"url": bot.user.avatarURL
