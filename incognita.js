@@ -13,19 +13,19 @@ bot.on('ready', () => {
 	if (typeof invisibleServer != undefined) console.log('Located guild: ' + invisibleServer.name);
 	const logChannel = invisibleServer.channels.get(config.logChannelID);
 	if (typeof logChannel != undefined) console.log('Located log channel: ' + logChannel.name);
-	logChannel.send({"embed": {
-    "title": "SUCCESS",
-    "description": "Startup & connection to log channel successful!",
-    "color": 0x08c507,
-    "thumbnail": {
-      "url": bot.user.avatarURL
-    },
-    "author": {
-      "name": bot.username,
-      "icon_url": bot.user.avatarURL
-    }
-  }
-});
+	logChannel.send({embed: {
+		color: 0x08c507,
+		author: {
+			name: bot.user.username,
+			icon_url: 'http://thejacksonvillebookstore.com/images/blank.png'
+		},
+		title: "Success",
+		description: "Startup & connection to log channel successful!",
+		"thumbnail": {
+			"url": bot.user.avatarURL
+		},
+	}
+	});
 });
 
 bot.on('disconnect', event => {
