@@ -25,7 +25,6 @@ bot.on('message', message => {
 	console.log('Channel ID: ' + message.channel.id)
 	console.log('Channel Name: ' + message.channel.name)
 	const messageSplit = message.content.split(' ');
-	if (message.content.toLowerCase().includes('phil')) message.delete();
 	console.log('Output of censor: ' + JSON.stringify(censor.getCategoryCounts(message.content)));
 	censorLoop:
 	for (i = 0; i < messageSplit.length; i++) {
