@@ -26,7 +26,6 @@ bot.on('message', message => {
   console.log('Channel Name: ' + message.channel.name)
   const messageSplit = message.content.split(' ');
   console.log('Output of censor: ' + JSON.stringify(censor.getCategoryCounts(message.content)));
-  censorLoop:
   for (i = 0; i < messageSplit.length; i++) {
     let simpleWord = messageSplit[i].replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s{2,}/g," ").toLowerCase().replace(/0|&#1086;/gi,'o').replace(/1/gi,'i');
     console.log('Checking: ' + messageSplit[i]);
@@ -51,7 +50,7 @@ bot.on('message', message => {
         delay(100000);
         m.delete();
       });
-      break censorLoop;
+      break;
     };
   };
 
