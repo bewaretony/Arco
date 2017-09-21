@@ -6,30 +6,74 @@ const config = require('config.json')('./secrets.json');
 const Profane = require('profane');
 const censor = new Profane();
 
-const token = config.token;
+const fs = require('fs');
+const http = require('http');
 const { exec } = require('child_process');
+
+const token = config.token;
+
+if (fs.exists('publicIP.json', function (exists) {
+  if (!exists) {
+    fs.writeFile('publicIP.json', '{"ip":null}', { flag: 'wx' }, function (err) {
+      if (err) throw err;
+      console.log('IP json created.');
+    });
+  };
+}));
+
 
 bot.on('ready', () => {
   console.log('0x526561647921');
+
+  const ipServer = bot.guilds.get(config.ipServerID);
+  if (typeof ipServer != 'undefined') console.log('Located guild: ' + ipServer.name);
+  ipChannel = ipServer.channels.get(config.ipChannelID);
+  if (typeof ipChannel != 'undefined') console.log('Located IP channel: ' + ipChannel.name);
 });
 
 bot.on('disconnect', event => {
   console.log('!Disconnected: ' + event.reason + ' (' + event.code + ')!');
 });
 
+// Public IP checker
+
+let interval = 0.25 * 60 * 1000;
+setInterval(function() {
+  console.log('Checking if public IP has changed...');
+
+  var oldIP = JSON.parse(fs.readFileSync('publicIP.json', 'utf8')).ip;
+
+  http.get({'host': 'api.ipify.org', 'port': 80, 'path': '/'}, function(resp) {
+    resp.on('data', function(newIP) {
+      if (newIP != oldIP) {
+        console.log('IP changed; new IP: ' + newIP);
+        ipChannel.send('IP CHANGED! NEW IP: ' + newIP);
+        fs.writeFileSync('publicIP.json', '{"ip": "' + newIP + '"}', 'utf8');
+      } else console.log('It hasn\'t.');
+    });
+  });
+
+}, interval);
+
+
+
 bot.on('message', message => {
   console.log('\n////NEW MESSAGE////');
   console.log('Time: ' + Date());
   console.log('From: ' + message.author.username);
   console.log('Message: ' + message.content);
-  console.log('Channel ID: ' + message.channel.id)
-  console.log('Channel Name: ' + message.channel.name)
+  console.log('Channel ID: ' + message.channel.id);
+  console.log('Channel Name: ' + message.channel.name);
   const messageSplit = message.content.split(' ');
+
   console.log('Output of censor: ' + JSON.stringify(censor.getCategoryCounts(message.content)));
+
   for (i = 0; i < messageSplit.length; i++) {
     let simpleWord = messageSplit[i].replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s{2,}/g," ").toLowerCase().replace(/0|&#1086;/gi,'o').replace(/1/gi,'i');
+
     console.log('Checking: ' + messageSplit[i]);
     console.log('Simplified: ' + simpleWord);
+
     console.log(censor.hasWord(simpleWord || simpleWord.replace(/[^\w\s]|(.)(?=\1)/gi, "")));
 
     if (censor.hasWord(simpleWord || simpleWord.replace(/[^\w\s]|(.)(?=\1)/gi, ""))) {
@@ -110,7 +154,7 @@ bot.on('message', message => {
             message.channel.send(stdout, {'code': true});
             message.delete();
           });
-          break; 
+          break;
       }
     } else if (message.author.id == config.admin && message.content.charAt(0) == '$') {         // Commands for the few
       let adminCommand = message.content.slice(1).split(' ');
