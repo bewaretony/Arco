@@ -397,5 +397,7 @@
     "dank": ["informal"],
     "marijuana": ["informal"],
     "noice": ["informal"],
-    "turd": ["insult"]
+    "turd": ["insult"],
+	"fuckers": ["insult", "sexual"],
+	"rape": ["sexual"]
 }
