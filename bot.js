@@ -47,7 +47,21 @@ setInterval(function() {
     resp.on('data', function(newIP) {
       if (newIP != oldIP) {
         console.log('IP changed; new IP: ' + newIP);
-        ipChannel.send('IP CHANGED! NEW IP: ' + newIP);
+        ipChannel.send({embed: {
+          author: {
+            name: 'Network Monitor',
+            icon_url: 'https://maxcdn.icons8.com/Share/icon/Mobile/cellular_network1600.png'
+          },
+          color: 0xf46242,
+          fields: [
+            {
+              name: 'Server IP:',
+              value: '```' + newIP + '```',
+              inline: true
+            }
+          ],
+        }
+        });
         fs.writeFileSync('publicIP.json', '{"ip": "' + newIP + '"}', 'utf8');
       } else console.log('It hasn\'t.');
     });
