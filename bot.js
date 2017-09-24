@@ -12,13 +12,17 @@ const { exec } = require('child_process');
 
 const token = config.token;
 
+var publicIP = {},
+  ipChannel
+
 if (fs.exists('publicIP.json', function (exists) {
   if (!exists) {
-    fs.writeFile('publicIP.json', '{"ip":null}', { flag: 'wx' }, function (err) {
+    fs.writeFileSync('publicIP.json', '{"ip": null}', { flag: 'wx' }, function (err) {
       if (err) throw err;
       console.log('IP json created.');
+publicIP = parsePublicIP();
     });
-  };
+  } else publicIP = parsePublicIP();
 }));
 
 
@@ -37,16 +41,35 @@ bot.on('disconnect', event => {
 
 // Public IP checker
 
-let interval = 5 * 60 * 1000;
+let interval = 0.1 * 60 * 1000;
 setInterval(function() {
   console.log('Checking if public IP has changed...');
 
-  var oldIP = JSON.parse(fs.readFileSync('publicIP.json', 'utf8')).ip;
+  var oldIP = publicIP.ip;
 
   http.get({'host': 'api.ipify.org', 'port': 80, 'path': '/'}, function(resp) {
     resp.on('data', function(newIP) {
       if (newIP != oldIP) {
         console.log('IP changed; new IP: ' + newIP);
+
+        console.log('Deleting old IP message...');
+        if (publicIP.ip != null) {
+          let messageToBeDeletedGuild = bot.guilds.get(publicIP.toPurge.guildID);
+          console.log('Marked message guild: ' + messageToBeDeletedGuild.name);
+
+          let messageToBeDeletedChannel = messageToBeDeletedGuild.channels.get(publicIP.toPurge.channelID);
+          console.log('Marked message channel: ' + messageToBeDeletedChannel.name);
+
+          let messageToBeDeleted = messageToBeDeletedChannel.messages.get(publicIP.toPurge.messageID);
+          console.log('Isolated message to be removed.');
+
+          console.log('Message to be deleted: ' + messageToBeDeleted.content);
+          messageToBeDeleted.delete();
+          console.log('Old IP message deleted!');
+        };
+
+        publicIP.ip = newIP.toString();
+
         ipChannel.send({embed: {
           author: {
             name: 'Network Monitor',
@@ -56,13 +79,20 @@ setInterval(function() {
           fields: [
             {
               name: 'Server IP:',
-              value: '```' + newIP + '```',
+              value: '`' + newIP + '`',
               inline: true
             }
           ],
         }
+        }).then( msg => {
+          publicIP.toPurge = {};
+          publicIP.toPurge.messageID = msg.id;
+          publicIP.toPurge.channelID = msg.channel.id;
+          publicIP.toPurge.guildID = msg.guild.id;
+          console.log('Purge details saved.');
+          fs.writeFileSync('publicIP.json', JSON.stringify(publicIP), 'utf8');
         });
-        fs.writeFileSync('publicIP.json', '{"ip": "' + newIP + '"}', 'utf8');
+
       } else console.log('It hasn\'t.');
     });
   });
@@ -235,5 +265,10 @@ function delay(milliseconds) {
     };
   };
 }
+
+function parsePublicIP() {
+  return JSON.parse(fs.readFileSync('publicIP.json', 'utf8'));
+}
+
 
 bot.login(token);
