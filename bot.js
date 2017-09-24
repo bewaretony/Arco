@@ -41,7 +41,7 @@ bot.on('disconnect', event => {
 
 // Public IP checker
 
-let interval = 0.1 * 60 * 1000;
+let interval = 5 * 60 * 1000;
 setInterval(function() {
   console.log('Checking if public IP has changed...');
 
