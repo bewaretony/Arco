@@ -20,7 +20,7 @@ if (fs.exists('publicIP.json', function (exists) {
     fs.writeFileSync('publicIP.json', '{"ip": null}', { flag: 'wx' }, function (err) {
       if (err) throw err;
       console.log('IP json created.');
-publicIP = parsePublicIP();
+      publicIP = parsePublicIP();
     });
   } else publicIP = parsePublicIP();
 }));
