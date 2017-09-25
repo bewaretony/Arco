@@ -54,17 +54,17 @@ setInterval(function() {
 
         console.log('Deleting old IP message...');
         if (publicIP.ip != null) {
-          let messageToBeDeletedGuild = bot.guilds.get(publicIP.toPurge.guildID);
-          console.log('Marked message guild: ' + messageToBeDeletedGuild.name);
+          let oldIPMessageGuild = bot.guilds.get(publicIP.toPurge.guildID);
+          console.log('Marked message guild: ' + oldIPMessageGuild.name);
 
-          let messageToBeDeletedChannel = messageToBeDeletedGuild.channels.get(publicIP.toPurge.channelID);
-          console.log('Marked message channel: ' + messageToBeDeletedChannel.name);
+          let oldIPMessageChannel = oldIPMessageGuild.channels.get(publicIP.toPurge.channelID);
+          console.log('Marked message channel: ' + oldIPMessageChannel.name);
 
-          let messageToBeDeleted = messageToBeDeletedChannel.messages.get(publicIP.toPurge.messageID);
+          let oldIPMessage = oldIPMessageChannel.messages.get(publicIP.toPurge.messageID);
           console.log('Isolated message to be removed.');
 
-          console.log('Message to be deleted: ' + messageToBeDeleted.content);
-          messageToBeDeleted.delete();
+          console.log('Message to be deleted: ' + oldIPMessage.content);
+          oldIPMessage.delete();
           console.log('Old IP message deleted!');
         };
 
