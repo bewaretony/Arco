@@ -21,7 +21,7 @@ if (fs.exists('publicIP.json', function (exists) {
       if (err) throw err;
       console.log('IP json created.');
     });
- };
+  };
 }));
 
 
@@ -33,7 +33,7 @@ bot.on('ready', () => {
   ipChannel = ipServer.channels.get(config.ipChannelID);
   if (typeof ipChannel != 'undefined') console.log('Located IP channel: ' + ipChannel.name);
 
-checkIPChange(publicIP);
+  checkIPChange(publicIP);
 
 });
 
@@ -218,61 +218,66 @@ function parsePublicIP() {
 }
 
 function checkIPChange(publicIP) {
-  console.log('Checking if public IP has changed...');
+  try {
+    console.log('Checking if public IP has changed...');
 
-  publicIP = parsePublicIP();
+    publicIP = parsePublicIP();
 
-  var oldIP = publicIP.ip;
+    var oldIP = publicIP.ip;
 
-  http.get({'host': 'api.ipify.org', 'port': 80, 'path': '/'}, function(resp) {
-    resp.on('data', function(newIP) {
-      if (newIP != oldIP) {
-        console.log('IP changed; new IP: ' + newIP);
+    http.get({'host': 'api.ipify.org', 'port': 80, 'path': '/'}, function(resp) {
+      resp.on('data', function(newIP) {
+        if (newIP != oldIP) {
+          console.log('IP changed; new IP: ' + newIP);
 
-        if (publicIP.ip != null) {
-          console.log('Deleting old IP message...');
-          let oldIPMessageGuild = bot.guilds.get(publicIP.toPurge.guildID);
-          console.log('Marked message guild: ' + oldIPMessageGuild.name);
+          if (publicIP.ip != null) {
+            console.log('Deleting old IP message...');
+            let oldIPMessageGuild = bot.guilds.get(publicIP.toPurge.guildID);
+            console.log('Marked message guild: ' + oldIPMessageGuild.name);
 
-          let oldIPMessageChannel = oldIPMessageGuild.channels.get(publicIP.toPurge.channelID);
-          console.log('Marked message channel: ' + oldIPMessageChannel.name);
+            let oldIPMessageChannel = oldIPMessageGuild.channels.get(publicIP.toPurge.channelID);
+            console.log('Marked message channel: ' + oldIPMessageChannel.name);
 
-          let oldIPMessage = oldIPMessageChannel.messages.get(publicIP.toPurge.messageID);
-          console.log('Isolated message to be removed.');
+            let oldIPMessage = oldIPMessageChannel.messages.get(publicIP.toPurge.messageID);
+            console.log('Isolated message to be removed.');
 
-          console.log('Message to be deleted: ' + oldIPMessage.content);
-          oldIPMessage.delete();
-          console.log('Old IP message deleted!');
-        };
+            console.log('Message to be deleted: ' + oldIPMessage.content);
+            oldIPMessage.delete();
+            console.log('Old IP message deleted!');
+          };
 
-        publicIP.ip = newIP.toString();
+          publicIP.ip = newIP.toString();
 
-        ipChannel.send({embed: {
-          author: {
-            name: 'Network Monitor',
-            icon_url: 'https://maxcdn.icons8.com/Share/icon/Mobile/cellular_network1600.png'
-          },
-          color: 0xf46242,
-          fields: [
-            {
-              name: 'Server IP:',
-              value: '`' + newIP + '`',
-              inline: true
-            }
-          ],
-        }
-        }).then( msg => {
-          publicIP.toPurge = {};
-          publicIP.toPurge.messageID = msg.id;
-          publicIP.toPurge.channelID = msg.channel.id;
-          publicIP.toPurge.guildID = msg.guild.id;
-          console.log('Purge details saved.');
-          fs.writeFileSync('publicIP.json', JSON.stringify(publicIP), 'utf8');
-        });
+          ipChannel.send({embed: {
+            author: {
+              name: 'Network Monitor',
+              icon_url: 'https://maxcdn.icons8.com/Share/icon/Mobile/cellular_network1600.png'
+            },
+            color: 0xf46242,
+            fields: [
+              {
+                name: 'Server IP:',
+                value: '`' + newIP + '`',
+                inline: true
+              }
+            ],
+          }
+          }).then( msg => {
+            publicIP.toPurge = {};
+            publicIP.toPurge.messageID = msg.id;
+            publicIP.toPurge.channelID = msg.channel.id;
+            publicIP.toPurge.guildID = msg.guild.id;
+            console.log('Purge details saved.');
+            fs.writeFileSync('publicIP.json', JSON.stringify(publicIP), 'utf8');
+          });
 
-      } else console.log('It hasn\'t.');
+        } else console.log('It hasn\'t.');
+      });
     });
-  });
+  } catch (err) {
+    console.log(err);
+    checkIPChange(publicIP);
+  };
 }
 
 
