@@ -13,6 +13,7 @@ const { exec } = require('child_process');
 const token = config.token;
 
 var publicIP = {},
+	ipServer,
   ipChannel
 
 if (fs.exists('publicIP.json', function (exists) {
@@ -27,6 +28,11 @@ if (fs.exists('publicIP.json', function (exists) {
 
 bot.on('ready', () => {
   console.log('0x526561647921');
+
+  ipServer = bot.guilds.get(config.ipServerID);
+  if (typeof ipServer != 'undefined') console.log('Located guild: ' + ipServer.name);
+  ipChannel = ipServer.channels.get(config.ipChannelID);
+  if (typeof ipChannel != 'undefined') console.log('Located IP channel: ' + ipChannel.name);
 
   checkIPChange(publicIP);
 
@@ -225,6 +231,16 @@ function checkIPChange(publicIP) {
         if (newIP != oldIP) {
           console.log('IP changed; new IP: ' + newIP);
 
+          if (publicIP.ip != null) {
+            console.log('Deleting old IP message...');
+
+            var oldIPMessage = ipChannel.messages.get(publicIP.toPurgeID);
+            console.log('Isolated message to be removed.');
+
+            console.log('Message to be deleted: ' + oldIPMessage.content);
+            oldIPMessage.delete();
+            console.log('Old IP message deleted!');
+          };
 
           publicIP.ip = newIP.toString();
 
@@ -243,6 +259,8 @@ function checkIPChange(publicIP) {
             ],
           }
           }).then( msg => {
+            publicIP.toPurgeID = msg.id;
+            console.log('Purge details saved.');
             fs.writeFileSync('publicIP.json', JSON.stringify(publicIP), 'utf8');
           });
 
