@@ -13,7 +13,7 @@ const { exec } = require('child_process');
 const token = config.token;
 
 var publicIP = {},
-	ipServer,
+  ipServer,
   ipChannel
 
 if (fs.exists('publicIP.json', function (exists) {
@@ -234,12 +234,14 @@ function checkIPChange(publicIP) {
           if (publicIP.ip != null) {
             console.log('Deleting old IP message...');
 
-            var oldIPMessage = ipChannel.messages.get(publicIP.toPurgeID);
-            console.log('Isolated message to be removed.');
+            var oldIPMessage = ipChannel.fetchMessage(publicIP.toPurgeID).then( msg => {
 
-            console.log('Message to be deleted: ' + oldIPMessage.content);
-            oldIPMessage.delete();
-            console.log('Old IP message deleted!');
+              console.log('Isolated message to be removed.')
+
+              console.log('Message to be deleted: ' + msg.content);
+              msg.delete();
+              console.log('Old IP message deleted!')
+            })
           };
 
           publicIP.ip = newIP.toString();
