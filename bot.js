@@ -234,7 +234,7 @@ function checkIPChange(publicIP) {
           if (publicIP.ip != null) {
             console.log('Deleting old IP message...');
 
-            var oldIPMessage = ipChannel.fetchMessage(publicIP.toPurgeID).then( msg => {
+            ipChannel.fetchMessage(publicIP.toPurgeID).then( msg => {
 
               console.log('Isolated message to be removed.')
 
@@ -242,7 +242,7 @@ function checkIPChange(publicIP) {
               msg.delete();
               console.log('Old IP message deleted!')
             })
-          };
+          }
 
           publicIP.ip = newIP.toString();
 
