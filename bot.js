@@ -17,25 +17,24 @@ var publicIP = {},
 
 if (fs.exists('publicIP.json', function (exists) {
   if (!exists) {
-    fs.writeFileSync('publicIP.json', '{"ip": null}', { flag: 'wx' }, function (err) {
+    fs.writeFileSync('publicIP.json', '{"ip": null}', { flag: 'w' }, function (err) {
       if (err) throw err;
       console.log('IP json created.')
     })
   }
-}))
+}));
 
 
-  bot.on('ready', () => {
-    console.log('0x526561647921')
+bot.on('ready', () => {
+  console.log('0x526561647921')
 
-    ipServer = bot.guilds.get(config.ipServerID)
-    if (typeof ipServer != 'undefined') console.log('Located guild: ' + ipServer.name);
-    ipChannel = ipServer.channels.get(config.ipChannelID)
-    if (typeof ipChannel != 'undefined') console.log('Located IP channel: ' + ipChannel.name)
+  ipServer = bot.guilds.get(config.ipServerID)
+  if (typeof ipServer != 'undefined') console.log('Located guild: ' + ipServer.name);
+  ipChannel = ipServer.channels.get(config.ipChannelID)
+  if (typeof ipChannel != 'undefined') console.log('Located IP channel: ' + ipChannel.name)
 
-    checkIPChange(publicIP)
-
-  })
+  checkIPChange(publicIP)
+})
 
 bot.on('disconnect', event => {
   console.log('!Disconnected: ' + event.reason + ' (' + event.code + ')!')
@@ -43,7 +42,7 @@ bot.on('disconnect', event => {
 
 
 // Public IP checker
-let interval = 5 * 60 * 1000
+let interval = 0.1 * 60 * 1000
 setInterval(checkIPChange, interval, publicIP)
 
 
@@ -220,60 +219,57 @@ function parsePublicIP() {
 }
 
 function checkIPChange(publicIP) {
-  try {
-    console.log('Checking if public IP has changed...')
+  console.log('Checking if public IP has changed...')
 
-    publicIP = parsePublicIP()
+  publicIP = parsePublicIP()
 
-    var oldIP = publicIP.ip;
+  var oldIP = publicIP.ip
 
-    http.get({'host': 'api.ipify.org', 'port': 80, 'path': '/'}, function (resp) {
-      resp.on('data', function (newIP) {
-        if (newIP != oldIP) {
-          console.log('IP changed; new IP: ' + newIP)
+  http.get({'host': 'api.ipify.org', 'port': 80, 'path': '/'}, function (resp) {
+    resp.on('data', function (newIP) {
+      if (newIP != oldIP) {
+        console.log('IP changed; new IP: ' + newIP)
 
-          if (publicIP.ip != undefined) {
-            console.log('Deleting old IP message...')
+        if (publicIP.ip != undefined) {
+          console.log('Deleting old IP message...')
 
-            ipChannel.fetchMessage(publicIP.toPurgeID).then( msg => {
+          ipChannel.fetchMessage(publicIP.toPurgeID).then( msg => {
 
-              console.log('Isolated message to be removed.')
+            console.log('Isolated message to be removed.')
 
-              console.log('Message to be deleted: ' + msg.content);
-              msg.delete();
-              console.log('Old IP message deleted!')
-            })
-          }
-
-          publicIP.ip = newIP.toString()
-
-          ipChannel.send({embed: {
-            author: {
-              name: 'Network Monitor',
-              icon_url: 'https://maxcdn.icons8.com/Share/icon/Mobile/cellular_network1600.png'
-            },
-            color: 0xf46242,
-            fields: [
-              {
-                name: 'Server IP:',
-                value: '`' + newIP + '`',
-                inline: true
-              }
-            ],
-          }
-          }).then( msg => {
-            publicIP.toPurgeID = msg.id
-            console.log('Purge details saved.');
-            fs.writeFileSync('publicIP.json', JSON.stringify(publicIP), 'utf8')
+            console.log('Message to be deleted: ' + msg.content);
+            msg.delete();
+            console.log('Old IP message deleted!')
           })
+        }
 
-        } else console.log('It hasn\'t.')
-      })
+        publicIP.ip = newIP.toString()
+
+        ipChannel.send({embed: {
+          author: {
+            name: 'Network Monitor',
+            icon_url: 'https://maxcdn.icons8.com/Share/icon/Mobile/cellular_network1600.png'
+          },
+          color: 0xf46242,
+          fields: [
+            {
+              name: 'Server IP:',
+              value: '`' + newIP + '`',
+              inline: true
+            }
+          ],
+        }
+        }).then( msg => {
+          publicIP.toPurgeID = msg.id
+          console.log('Purge details saved.');
+          fs.writeFileSync('publicIP.json', JSON.stringify(publicIP), 'utf8')
+        })
+
+      } else console.log('It hasn\'t.')
     })
-  } catch (err) {
-    console.log(err);
-    checkIPChange(publicIP);
-  }
+  }).on('error', function (err) {
+    console.log('Failure to connect: ' + err)
+  })
 }
 
 
