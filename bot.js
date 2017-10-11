@@ -260,6 +260,8 @@ function checkIPChange(publicIP) {
           ],
         }
         }).then( msg => {
+          msg.pin()
+
           publicIP.toPurgeID = msg.id
           console.log('Purge details saved.');
           fs.writeFileSync('publicIP.json', JSON.stringify(publicIP), 'utf8')
