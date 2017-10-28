@@ -48,7 +48,7 @@ setInterval(checkIPChange, interval, publicIP)
 
 
 bot.on('message', message => {
-  console.log(Date() + ' | ' + message.author.username + ': ' + message.content);
+  console.log('\n' + Date() + ' | ' + message.author.username + ': ' + message.content);
   console.log('Channel ID: ' + message.channel.id);
   console.log('Channel Name: ' + message.channel.name);
   const messageSplit = message.content.split(' ')
@@ -88,7 +88,7 @@ bot.on('message', message => {
 
 
   if (message.author.username == 'Guzaboo') {
-    if (message.content.charAt(message.length - 1) === '?') {
+    if (message.content.charAt(message.content.length - 1) === '?') {
       message.react('🤔')
     } else message.react('🙆')
   }
