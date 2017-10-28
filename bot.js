@@ -53,6 +53,34 @@ bot.on('message', message => {
   console.log('Channel Name: ' + message.channel.name);
   const messageSplit = message.content.split(' ')
 
+  let date = new Date()
+  console.log('Hours: ' + date.getHours())
+  if (date.getHours() >= 18) {
+    let decision = randInt(1, 20)
+    if (decision = 10) {
+      message.react('🇬')
+        .then(() => message.react('🇴')
+          .then(() => message.react('🅾')
+            .then(() => message.react('🇩')
+              .then(() => message.react('🇳')
+                .then(() => message.react('🇮')
+                  .then(() => message.react('🇬')
+                    .then(() => message.react('🇭')
+                      .then(() => message.react('🇹')
+                        .then(() => message.react('🛏')
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+    }
+  }
+
+
   console.log('Output of censor: ' + JSON.stringify(censor.getCategoryCounts(message.content)))
 
   for (i = 0; i < messageSplit.length; i++) {
