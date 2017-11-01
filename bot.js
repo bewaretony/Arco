@@ -106,7 +106,7 @@ bot.on('message', message => {
   if (message.author.username == 'Guzaboo') {
     if (message.content.charAt(message.content.length - 1) === '?') {
       message.react('🤔')
-    } else message.react('🙆')
+    } else message.react('🙅')
   }
 
   if (!message.author.bot) {
