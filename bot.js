@@ -295,6 +295,4 @@ function checkIPChange(publicIP) {
   })
 }
 
-
-
 bot.login(token);
