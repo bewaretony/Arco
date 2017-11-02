@@ -56,8 +56,6 @@ bot.on('message', message => {
   let date = new Date()
   console.log('Hours: ' + date.getHours())
   if (date.getHours() >= 22 || date.getHours() < 6) {
-    let decision = randInt(1, 20)
-    if (decision = 10) {
       message.react('🅱')
         .then(() => message.react('🇪')
           .then(() => message.react('🇩')
@@ -65,7 +63,6 @@ bot.on('message', message => {
             )
           )
         )
-    }
   }
 
 
