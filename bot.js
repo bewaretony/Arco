@@ -25,16 +25,16 @@ if (fs.exists('publicIP.json', function (exists) {
 }))
 
 
-bot.on('ready', () => {
-  console.log('0x526561647921')
+  bot.on('ready', () => {
+    console.log('0x526561647921')
 
-  ipServer = bot.guilds.get(config.ipServerID)
-  if (typeof ipServer != 'undefined') console.log('Located guild: ' + ipServer.name);
-  ipChannel = ipServer.channels.get(config.ipChannelID)
-  if (typeof ipChannel != 'undefined') console.log('Located IP channel: ' + ipChannel.name)
+    ipServer = bot.guilds.get(config.ipServerID)
+    if (typeof ipServer != 'undefined') console.log('Located guild: ' + ipServer.name);
+    ipChannel = ipServer.channels.get(config.ipChannelID)
+    if (typeof ipChannel != 'undefined') console.log('Located IP channel: ' + ipChannel.name)
 
-  checkIPChange(publicIP)
-})
+    checkIPChange(publicIP)
+  })
 
 bot.on('disconnect', event => {
   console.log('!Disconnected: ' + event.reason + ' (' + event.code + ')!')
@@ -56,13 +56,13 @@ bot.on('message', message => {
   let date = new Date()
   console.log('Hours: ' + date.getHours())
   if (date.getHours() >= 22 || date.getHours() < 6) {
-      message.react('🅱')
-        .then(() => message.react('🇪')
-          .then(() => message.react('🇩')
-            .then(() => message.react('🛏')
-            )
+    message.react('🅱')
+      .then(() => message.react('🇪')
+        .then(() => message.react('🇩')
+          .then(() => message.react('🛏')
           )
         )
+      )
   }
 
 
