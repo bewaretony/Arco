@@ -76,7 +76,7 @@ bot.on('message', message => {
 
     console.log(censor.hasWord(simpleWord || simpleWord.replace(/[^\w\s]|(.)(?=\1)/gi, "")))
 
-    if (censor.hasWord(simpleWord || simpleWord.replace(/[^\w\s]|(.)(?=\1)/gi, "")) {
+    if (censor.hasWord(simpleWord || simpleWord.replace(/[^\w\s]|(.)(?=\1)/gi, ""))) {
       console.log('Profanity present in message from: ' + message.author.username);
       message.react('🛑');
       message.reply({'content': '🚫 ¡LANGUAGE CENSORSHIP! 🚫', "embed": {
