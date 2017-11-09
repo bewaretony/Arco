@@ -145,7 +145,6 @@ bot.on('message', message => {
         console.log('Math output valid.');
         message.channel.send(mathInput + ' = ' + mathOutput)
       }
-      message.reply(mathOutput)
 
     } else if (message.content.charAt(0) == '?') {	// Commands for all
       switch (messageSplit[0].slice(1)) {
