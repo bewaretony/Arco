@@ -118,7 +118,7 @@ bot.on('message', message => {
 
       try {
 
-        var mathOutput = math.eval(mathInput)
+        var mathOutput = eval(math.eval(mathInput))
 
       } catch (error) {
         console.log('Error Encountered: ' + error)
