@@ -1,6 +1,7 @@
 const Discord = require('discord.js'),
   bot = new Discord.Client(),
   math = require('mathjs'),
+  parser = math.parser(),
   mathsteps = require('mathsteps'),
   config = require('config.json')('./secrets.json'),
   Profane = require('profane'),
@@ -118,7 +119,7 @@ bot.on('message', message => {
 
       try {
 
-        var mathOutput = eval(math.eval(mathInput))
+        var mathOutput = parser.eval(mathInput)
 
       } catch (error) {
         console.log('Error Encountered: ' + error)
