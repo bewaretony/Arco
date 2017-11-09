@@ -148,7 +148,7 @@ bot.on('message', message => {
     } else if (message.content.charAt(0) == '?') {	// Commands for all
       switch (messageSplit[0].slice(1)) {
         case 'fortune':
-          exec('fortune -s', (err, stdout, stderr) => {	// Executes the fortune command
+          exec('fortune -s '/*  + message.content.slice(messageSplit[0].length + 1) */, (err, stdout, stderr) => {	// Executes the fortune command
             if (err) {
               console.log('Error encountered: ' + err);
               return;
