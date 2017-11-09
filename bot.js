@@ -119,10 +119,11 @@ bot.on('message', message => {
 
       try {
 
-        var mathOutput = parser.eval(mathInput)
+        var mathOutput = eval(parser.eval(mathInput))
 
       } catch (error) {
-        console.log('Error Encountered: ' + error)
+        console.log('Error Encountered: ' + error);
+        message.channel.send(error)
 
         try {
           console.log('Trying mathsteps...');
@@ -135,8 +136,8 @@ bot.on('message', message => {
         } catch (error) {
 
           console.log('Error ' + error + ' encountered. Failure.');
-          message.reply('Error encountered: ' + mathInput + ' invalid. Error: ' + error)
-
+          message.reply('Error encountered: ' + mathInput + ' invalid. Error: ' + error);
+          message.channel.send(error)
         }
       }
 
