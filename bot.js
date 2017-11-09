@@ -139,7 +139,7 @@ bot.on('message', message => {
         }
       }
 
-      if (mathOutput !== undefined) {
+      if (mathOutput != undefined) {
         message.delete();
         console.log('Math output valid.');
         message.channel.send(mathInput + ' = ' + mathOutput)
