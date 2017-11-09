@@ -396,6 +396,7 @@
     "marijuana": ["informal"],
     "noice": ["informal"],
     "turd": ["insult"],
-	"fuckers": ["insult", "sexual"],
-	"rape": ["sexual"]
+    "fuckers": ["insult", "sexual"],
+    "rape": ["sexual"],
+    "penisland": ["sexual"]
 }
