@@ -123,7 +123,6 @@ bot.on('message', message => {
 
       } catch (error) {
         console.log('Error Encountered: ' + error);
-        message.reply(error)
 
         try {
           console.log('Trying mathsteps...');
