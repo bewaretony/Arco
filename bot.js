@@ -123,7 +123,7 @@ bot.on('message', message => {
 
       } catch (error) {
         console.log('Error Encountered: ' + error);
-        message.channel.send(error)
+        message.reply(error)
 
         try {
           console.log('Trying mathsteps...');
@@ -136,8 +136,7 @@ bot.on('message', message => {
         } catch (error) {
 
           console.log('Error ' + error + ' encountered. Failure.');
-          message.reply('Error encountered: ' + mathInput + ' invalid. Error: ' + error);
-          message.channel.send(error)
+          message.reply('Error encountered: ' + mathInput + ' invalid. Error: ' + error)
         }
       }
 
@@ -146,6 +145,7 @@ bot.on('message', message => {
         console.log('Math output valid.');
         message.channel.send(mathInput + ' = ' + mathOutput)
       }
+      message.reply(mathOutput)
 
     } else if (message.content.charAt(0) == '?') {	// Commands for all
       switch (messageSplit[0].slice(1)) {
