@@ -69,14 +69,14 @@ bot.on('message', message => {
   console.log('Output of censor: ' + JSON.stringify(censor.getCategoryCounts(message.content)))
 
   for (i = 0; i < messageSplit.length; i++) {
-    let simpleWord = messageSplit[i].replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s{2,}/g," ").toLowerCase().replace(/0|&#1086;/gi,'o').replace(/1/gi,'i')
+    let simpleWord = messageSplit[i].replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s{2,}/g," ").toLowerCase().replace(/0|&#1086;/gi,'o').replace(/1/gi,'i').replace(' ', '')
 
     console.log('Checking: ' + messageSplit[i]);
     console.log('Simplified: ' + simpleWord)
 
     console.log(censor.hasWord(simpleWord || simpleWord.replace(/[^\w\s]|(.)(?=\1)/gi, "")))
 
-    if (censor.hasWord(simpleWord || simpleWord.replace(/[^\w\s]|(.)(?=\1)/gi, ""))) {
+    if (censor.hasWord(simpleWord || simpleWord.replace(/[^\w\s]|(.)(?=\1)/gi, "")) {
       console.log('Profanity present in message from: ' + message.author.username);
       message.react('🛑');
       message.reply({'content': '🚫 ¡LANGUAGE CENSORSHIP! 🚫', "embed": {
