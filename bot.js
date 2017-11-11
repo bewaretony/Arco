@@ -57,8 +57,8 @@ setInterval(checkIPChange, interval, publicIP)
 
 
 client.on('message', message => {
-  console.log('\n' + Date() + ' | ' + message.author.username + ': ' + message.content)
-  console.log('Channel ID: ' + message.channel.id)
+  console.log('\n' + Date(hours, minutes) + ' | ' + message.author.username + ': ' + message.content)
+  console.log('Guild Name: ' + message.guild.name)
   console.log('Channel Name: ' + message.channel.name)
   const messageSplit = message.content.split(' ')
 
@@ -75,7 +75,7 @@ client.on('message', message => {
   }
 
 
-  console.log('Output of censor: ' + JSON.stringify(censor.getCategoryCounts(message.content)))
+  console.log('Output of plain censor: ' + JSON.stringify(censor.getCategoryCounts(message.content)))
 
   for (let i = 0; i < messageSplit.length; i++) {
     let simpleWord = messageSplit[i].replace(/[.,/#!$%^&*;:{}=\-_`~()]/g,'').replace(/\s{2,}/g,' ').toLowerCase().replace(/0|&#1086;/gi,'o').replace(/1/gi,'i').replace(' ', '')
@@ -83,10 +83,9 @@ client.on('message', message => {
     console.log('Checking: ' + messageSplit[i])
     console.log('Simplified: ' + simpleWord)
 
-    console.log(censor.hasWord(simpleWord || simpleWord.replace(/[^\w\s]|(.)(?=\1)/gi, '')))
+    console.log('Has profanity: ' + censor.hasWord(simpleWord || simpleWord.replace(/[^\w\s]|(.)(?=\1)/gi, '')))
 
     if (censor.hasWord(simpleWord || simpleWord.replace(/[^\w\s]|(.)(?=\1)/gi, ''))) {
-      console.log('Profanity present in message from: ' + message.author.username)
       message.react('🛑')
       message.reply({'content': '🚫 ¡LANGUAGE CENSORSHIP! 🚫', 'embed': {
         'title': '¡LANGUAGE CENSORSHIP!',
@@ -100,7 +99,7 @@ client.on('message', message => {
         }
       }
       }).then(m => {
-        delay(100000)
+        delay(5000)
         m.delete()
       })
       break
@@ -140,7 +139,6 @@ client.on('message', message => {
           exec('fortune -s ' + message.content.slice(messageSplit[0].length + 1), (err, stdout) => {	// Executes the fortune command
             if (err) {
               console.log('Error encountered: ' + err)
-              return
             }
 
             message.channel.send(stdout, {'code': true})
