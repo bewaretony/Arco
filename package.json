@@ -1,23 +1,21 @@
 {
   "name": "arco",
-  "version": "2.5.0",
+  "version": "2.6.0",
   "description": "Arco brings fear, what more could you want?",
   "main": "bot.js",
   "dependencies": {
-    "config.json": "^0.0.4",
     "discord.js": "^11.2.1",
     "mathjs": "^3.16.5",
-    "mathsteps": "^0.1.6",
     "profane": "^1.3.0"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/The-Complex/Arco.git"
+    "url": "git+https://github.com/LEARAX/Arco.git"
   },
   "author": "Will: The Glorious",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/The-Complex/Arco/issues"
+    "url": "https://github.com/LEARAX/Arco/issues"
   },
-  "homepage": "https://github.com/The-Complex/Arco#readme"
+  "homepage": "https://github.com/LEARAX/Arco#readme"
 }

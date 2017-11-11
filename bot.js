@@ -1,24 +1,31 @@
 const Discord = require('discord.js'),
-  bot = new Discord.Client(),
+  client = new Discord.Client(),
   math = require('mathjs'),
   parser = math.parser(),
-  mathsteps = require('mathsteps'),
-  config = require('config.json')('./secrets.json'),
   Profane = require('profane'),
   censor = new Profane(),
   fs = require('fs'),
   http = require('http'),
-  { exec } = require('child_process')
+  exec = require('child_process').exec
 
-const token = config.token
+math.import({
+  'import':     function () { throw new Error('Import is disabled') },
+  'createUnit': function () { throw new Error('CreateUnit is disabled') },
+  'eval':       function () { throw new Error('Eval is disabled') },
+  'parse':      function () { throw new Error('Parse is disabled') },
+  'simplify':   function () { throw new Error('Simplify is disabled') },
+  'derivative': function () { throw new Error('Derivative is disabled') }
+}, { override: true })
 
-var publicIP = {},
+const config = JSON.parse(fs.readFileSync('secrets.json'))
+
+let publicIP = {},
   ipServer,
   ipChannel
 
 if (fs.exists('publicIP.json', function (exists) {
   if (!exists) {
-    fs.writeFileSync('publicIP.json', '{"ip": null}', { flag: 'w' }, function (err) {
+    fs.writeFileSync('publicIP.json', JSON.stringify({ 'ip': null }), { flag: 'w' }, function (err) {
       if (err) throw err
       console.log('IP json created.')
     })
@@ -26,29 +33,30 @@ if (fs.exists('publicIP.json', function (exists) {
 }))
 
 
-  bot.on('ready', () => {
+  client.on('ready', () => {
     console.log('0x526561647921')
 
-    ipServer = bot.guilds.get(config.ipServerID)
-    if (typeof ipServer != 'undefined') console.log('Located guild: ' + ipServer.name)
+    console.log(config.ipServerID)
+    ipServer = client.guilds.get(config.ipServerID)
+    console.log('Located guild: ' + ipServer.name)
     ipChannel = ipServer.channels.get(config.ipChannelID)
-    if (typeof ipChannel != 'undefined') console.log('Located IP channel: ' + ipChannel.name)
+    console.log('Located IP channel: ' + ipChannel.name)
 
     checkIPChange(publicIP)
   })
 
-bot.on('disconnect', event => {
+client.on('disconnect', event => {
   console.log('!Disconnected: ' + event.reason + ' (' + event.code + ')!')
 })
 
 
 // Public IP checker
-let interval = 5 * 60 * 1000
+let interval = 0.05 * 60 * 1000
 setInterval(checkIPChange, interval, publicIP)
 
 
 
-bot.on('message', message => {
+client.on('message', message => {
   console.log('\n' + Date() + ' | ' + message.author.username + ': ' + message.content)
   console.log('Channel ID: ' + message.channel.id)
   console.log('Channel Name: ' + message.channel.name)
@@ -114,101 +122,84 @@ bot.on('message', message => {
     // Calculator abilities
     if (message.content.charAt(0) == '#') {
       console.log('////MATH TIME////')
-      var mathInput = message.content.slice(1)
+      let mathInput = message.content.slice(1)
       console.log('Input: ' + mathInput)
 
+      message.delete()
+
       try {
-
-        var mathOutput = parser.eval(mathInput)
-
-      } catch (error) {
-        console.log('Error Encountered: ' + error)
-
-        try {
-          console.log('Trying mathsteps...')
-          let steps = mathsteps.simplifyExpression(mathInput)
-          steps.forEach(step => {
-            var mathOutput = step.newNode
-            console.log('After mathsteps: ' + mathOutput)
-          })
-
-        } catch (error) {
-
-          console.log('Error ' + error + ' encountered. Failure.')
-          message.reply('Error encountered: ' + mathInput + ' invalid. Error: ' + error)
-        }
+        message.channel.send(mathInput + ' returns ' + parser.eval(mathInput))
+      } catch (err) {
+        message.channel.send(mathInput + ' returns ' + err)
       }
 
-      if (mathOutput != undefined) {
-        message.delete()
-        console.log('Math output valid.')
-        message.channel.send(mathInput + ' = ' + mathOutput)
-      }
 
-    } else if (message.content.charAt(0) == '?') {	// Commands for all
+    } else if (message.content.charAt(0) == '?') {							// Commands for all
       switch (messageSplit[0].slice(1)) {
-      case 'fortune':
-        exec('fortune -s ' + message.content.slice(messageSplit[0].length + 1), (err, stdout) => {	// Executes the fortune command
-          if (err) {
-            console.log('Error encountered: ' + err)
-            return
-          }
+        case 'fortune':
+          exec('fortune -s ' + message.content.slice(messageSplit[0].length + 1), (err, stdout) => {	// Executes the fortune command
+            if (err) {
+              console.log('Error encountered: ' + err)
+              return
+            }
 
-          message.channel.send(stdout, {'code': true})
-          message.delete()
-        })
-        break
+            message.channel.send(stdout, {'code': true})
+            message.delete()
+          })
+          break
       }
-    } else if (message.author.id == config.admin && message.content.charAt(0) == '$') {         // Commands for the few
+    } else if (message.author.id == config.admin && message.content.charAt(0) == '$') {			// Commands for the few
       let adminCommand = message.content.slice(1).split(' ')
       console.log('Admin Command Issued: ' + adminCommand)
 
       switch (adminCommand[0]) {
-      case 'sweep':
-        switch (adminCommand[1]) {
+        case 'sweep':
+          switch (adminCommand[1]) {
 
-        case 'content':
-          var sweepTargetContent = adminCommand.splice(2).join(' ')
-          console.log('Sweeping chat for messages matching ' + sweepTargetContent + '...')
-          message.channel.fetchMessages({limit:100}).then(messages => {
-            let Victims = messages.filter(message => message.content.includes(sweepTargetContent))
+            case 'content':
+              message.channel.fetchMessages({limit:100}).then(messages => {
+                let sweepTargetContent = adminCommand.splice(2).join(' ')
+                console.log('Sweeping chat for messages matching ' + sweepTargetContent + '...')
 
-            message.channel.bulkDelete(Victims)
-          })
-          break
+                let Victims = messages.filter(message => message.content.includes(sweepTargetContent))
 
-        case 'charAt':
-          console.log('Sweeping chat for messages with a \'' + adminCommand[3] + '\' character in the ' + adminCommand[2] + 'position...')
-          message.channel.fetchMessages({limit:100}).then(messages => {
-            let Victims = messages.filter(message => message.content.charAt(adminCommand[2]) == adminCommand[3])
+                message.channel.bulkDelete(Victims)
+              })
+              break
 
-            message.channel.bulkDelete(Victims)
-          })
-          break
+            case 'charAt':
+              console.log('Sweeping chat for messages with a \'' + adminCommand[3] + '\' character in the ' + adminCommand[2] + 'position...')
+              message.channel.fetchMessages({limit:100}).then(messages => {
+                let Victims = messages.filter(message => message.content.charAt(adminCommand[2]) == adminCommand[3])
 
-        case 'author':
-          var sweepTargetUser = adminCommand.splice(2).join(' ')
-          console.log('Sweeping chat for messages from ' + sweepTargetUser + '...')
-          message.channel.fetchMessages({limit:100}).then(messages => {
-            let Victims = messages.filter(message => message.author.username == sweepTargetUser)
+                message.channel.bulkDelete(Victims)
+              })
+              break
 
-            message.channel.bulkDelete(Victims)
-          })
-          break
+            case 'author':
+              message.channel.fetchMessages({limit:100}).then(messages => {
+                let sweepTargetUser = adminCommand.splice(2).join(' ')
+                console.log('Sweeping chat for messages from ' + sweepTargetUser + '...')
 
-        default:
-          if (adminCommand[1] != undefined) {
-            console.log('Sweeping chat for ' + adminCommand[1] + ' messages...')
-          } else {
-            console.log('Removing past 100 messages...')
+                let Victims = messages.filter(message => message.author.username == sweepTargetUser)
+
+                message.channel.bulkDelete(Victims)
+              })
+              break
+
+            default:
+              if (adminCommand[1] != undefined) {
+                console.log('Sweeping chat for ' + adminCommand[1] + ' messages...')
+              } else {
+                console.log('Removing past 100 messages...')
+              }
+              message.channel.fetchMessages({limit:adminCommand[1]}).then(messages => {
+                let Victims = messages
+
+                message.channel.bulkDelete(Victims)
+              })
+              break
           }
-          message.channel.fetchMessages({limit:adminCommand[1]}).then(messages => {
-            let Victims = messages
-
-            message.channel.bulkDelete(Victims)
-          })
-          break
-        }
       }
       message.delete()
     }
@@ -217,7 +208,7 @@ bot.on('message', message => {
 
 
 function delay(milliseconds) {
-  var start = new Date().getTime()
+  let start = new Date().getTime()
 
   for (let i = 0; i < 1e7; i++) {
     if ((new Date().getTime() - start) > milliseconds) {
@@ -243,7 +234,7 @@ function checkIPChange(publicIP) {
 
   publicIP = parsePublicIP()
 
-  var oldIP = publicIP.ip
+  let oldIP = publicIP.ip
 
   http.get({'host': 'api.ipify.org', 'port': 80, 'path': '/'}, function (resp) {
     resp.on('data', function (newIP) {
@@ -294,4 +285,4 @@ function checkIPChange(publicIP) {
   })
 }
 
-bot.login(token)
+client.login(config.token)
