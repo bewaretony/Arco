@@ -51,7 +51,7 @@ client.on('disconnect', event => {
 
 
 // Public IP checker
-let interval = 0.05 * 60 * 1000
+let interval = 0.5 * 60 * 1000
 setInterval(checkIPChange, interval, publicIP)
 
 
