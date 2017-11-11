@@ -23,27 +23,27 @@ let publicIP = {},
   ipServer,
   ipChannel
 
-if (fs.exists('publicIP.json', function (exists) {
+fs.exists('publicIP.json', function (exists) {
   if (!exists) {
     fs.writeFileSync('publicIP.json', JSON.stringify({ 'ip': null }), { flag: 'w' }, function (err) {
       if (err) throw err
       console.log('IP json created.')
     })
   }
-}))
+})
 
 
-  client.on('ready', () => {
-    console.log('0x526561647921')
+client.on('ready', () => {
+  console.log('0x526561647921')
 
-    console.log(config.ipServerID)
-    ipServer = client.guilds.get(config.ipServerID)
-    console.log('Located guild: ' + ipServer.name)
-    ipChannel = ipServer.channels.get(config.ipChannelID)
-    console.log('Located IP channel: ' + ipChannel.name)
+  console.log(config.ipServerID)
+  ipServer = client.guilds.get(config.ipServerID)
+  console.log('Located guild: ' + ipServer.name)
+  ipChannel = ipServer.channels.get(config.ipChannelID)
+  console.log('Located IP channel: ' + ipChannel.name)
 
-    checkIPChange(publicIP)
-  })
+  checkIPChange(publicIP)
+})
 
 client.on('disconnect', event => {
   console.log('!Disconnected: ' + event.reason + ' (' + event.code + ')!')
@@ -51,7 +51,7 @@ client.on('disconnect', event => {
 
 
 // Public IP checker
-let interval = 0.5 * 60 * 1000
+let interval = 5 * 60 * 1000
 setInterval(checkIPChange, interval, publicIP)
 
 
