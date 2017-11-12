@@ -153,7 +153,6 @@ client.on('message', message => {
       switch (adminCommand[0]) {
         case 'sweep':
           switch (adminCommand[1]) {
-
             case 'content':
               message.channel.fetchMessages({limit:100}).then(messages => {
                 let sweepTargetContent = adminCommand.splice(2).join(' ')
@@ -199,7 +198,6 @@ client.on('message', message => {
               break
           }
       }
-      message.delete()
     }
   }
 })
