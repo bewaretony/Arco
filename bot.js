@@ -112,6 +112,10 @@ client.on('message', message => {
     if (message.content.charAt(message.content.length - 1) === '?') {
       message.react('🤔')
     } else message.react('🙅')
+    if (message.content.includes('wn.nr')) {
+      message.delete()
+      return
+    }
   }
 
   if (!message.author.bot) {
